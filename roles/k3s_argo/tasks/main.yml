@@ -1,0 +1,26 @@
+---
+- name: Check argocd namespace exists
+  ansible.builtin.shell: k3s kubectl get namespace
+  register: namespace_contents
+
+- debug: msg="{{ namespace_contents.stdout.find('baaaaaa') }}"
+
+- name: Set namespace
+  ansible.builtin.command:
+    cmd: >
+      k3s kubectl create namespace {{ argocd_namespace }}
+  when: namespace_contents.stdout.find('argocd') == -1
+
+- name: Install ArgoCD
+  ansible.builtin.command:
+    cmd: >
+      k3s kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/{{ argocd_version }}/manifests/core-install.yaml
+
+- name: Download ArgoCD CLI
+  ansible.builtin.get_url:
+    url: https://github.com/argoproj/argo-cd/releases/download/{{ argocd_version }}/argocd-linux-amd64
+    timeout: 120
+    dest: /usr/local/bin/argocd
+    owner: root
+    group: root
+    mode: a+x
