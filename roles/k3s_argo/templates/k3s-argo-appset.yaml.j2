@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: home-services
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - git:
+      repoURL: https://github.com/keyrage/home-services.git
+      revision: HEAD
+      directories:
+        - path: home-services/*
+  template:
+    metadata:
+        name: 'homeservices-{{.path.basename}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/keyrage/home-services.git
+        targetRevision: HEAD
+        path: '{{.path.path}}'
+      destination:
+        server: 'https://kubernetes.default.svc'
+        namespace: default

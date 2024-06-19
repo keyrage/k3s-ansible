@@ -32,3 +32,17 @@
     owner: root
     group: root
     mode: a+x
+
+- name: Copy argo appset manifest
+  ansible.builtin.template:
+    src: "k3s-argo-appset.yaml.j2"
+    dest: "/tmp/argo-appset.yaml"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Apply appset manifest
+  ansible.builtin.command:
+    cmd: >
+      k3s kubectl apply -n argocd -f /tmp/argo-appset.yaml
+  
