@@ -34,12 +34,14 @@
     mode: a+x
 
 - name: Copy argo appset manifest
-  ansible.builtin.template:
-    src: "k3s-argo-appset.yaml.j2"
+  ansible.builtin.copy:
+    src: "argo-appset.yaml"
     dest: "/tmp/argo-appset.yaml"
     owner: root
     group: root
     mode: 0644
+
+# Define the project
 
 - name: Apply appset manifest
   ansible.builtin.command:
