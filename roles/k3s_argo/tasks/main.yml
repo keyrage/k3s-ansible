@@ -11,10 +11,18 @@
       k3s kubectl create namespace {{ argocd_namespace }}
   when: namespace_contents.stdout.find('argocd') == -1
 
+- name: Copy argo install manifest
+  ansible.builtin.template:
+    src: "k3s-argo-install.yaml.j2"
+    dest: "/tmp/argo-install.yaml"
+    owner: root
+    group: root
+    mode: 0644
+
 - name: Install ArgoCD
   ansible.builtin.command:
     cmd: >
-      k3s kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/{{ argocd_version }}/manifests/core-install.yaml
+      k3s kubectl apply -n argocd -f /tmp/argo-install.yaml
 
 - name: Download ArgoCD CLI
   ansible.builtin.get_url:
