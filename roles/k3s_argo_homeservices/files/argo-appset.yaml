@@ -5,6 +5,8 @@ metadata:
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
+  syncPolicy:
+    applicationsSync: create-update
   generators:
   - git:
       repoURL: https://github.com/keyrage/home-services.git
@@ -15,6 +17,9 @@ spec:
     metadata:
         name: 'homeservices-{{.path.basename}}'
     spec:
+      syncPolicy:
+        automated:
+          prune: true
       project: default
       source:
         repoURL: https://github.com/keyrage/home-services.git
@@ -23,3 +28,4 @@ spec:
       destination:
         server: 'https://kubernetes.default.svc'
         namespace: default
+

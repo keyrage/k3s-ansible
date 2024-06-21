@@ -50,6 +50,8 @@ k3s_cluster:
 ```
 
 If needed, you can also edit `vars` section at the bottom to match your environment.
+NOTE: You need to use: ansible-playbook --ask-vault-pass to prompt for the ansible vault password to unlock the k8s token
+
 
 If multiple hosts are in the server group the playbook will automatically setup k3s in HA mode with embedded etcd.
 An odd number of server nodes is required (3,5,7). Read the [official documentation](https://docs.k3s.io/datastore/ha-embedded) for more information.
