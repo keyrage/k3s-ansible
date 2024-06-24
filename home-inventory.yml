@@ -3,7 +3,7 @@ k3s_cluster:
   children:
     server:
       hosts:
-        192.168.122.45
+        192.168.122.136
     agent:
       hosts:
 

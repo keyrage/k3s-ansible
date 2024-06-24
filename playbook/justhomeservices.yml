@@ -1,0 +1,8 @@
+---
+- name: Configure homeservices
+  hosts: server
+  become: true
+  roles:
+
+    - role: k3s_argo_homeservices
+

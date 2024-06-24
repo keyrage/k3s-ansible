@@ -8,25 +8,16 @@
 
 - name: Create data folder
   ansible.builtin.file:
-    mode: 0644
+    mode: 0777
     owner: root
     group: root
     path: /opt/data
     state: directory
 
 
-- name: Set argcd context
-  ansible.builtin.command:
-    cmd: >
-      k3s kubectl config set-context --current --namespace argocd
-
 - name: Wait for default project to be available
-  ansible.builtin.command:
-    cmd: >
-      argocd proj list --core
-  register: cmd_argo_project
-  become: false
-  until: cmd_argo_project.stdout.find('default') != -1
+  ansible.builtin.pause:
+    seconds: 10
 
 - name: Apply appset manifest
   ansible.builtin.command:
