@@ -1,10 +1,17 @@
-- name: Copy argo appset manifest
-  ansible.builtin.copy:
-    src: "argo-appset.yaml"
+#- name: Copy argo appset manifest
+#  ansible.builtin.copy:
+#    src: "argo-appset.yaml"
+#    dest: "/tmp/argo-appset.yaml"
+#    owner: root
+#    group: root
+#    mode: 0644
+- name: Argo appset manifest
+  ansible.builtin.template:
+    src: "argo-appset.yaml.j2"
     dest: "/tmp/argo-appset.yaml"
     owner: root
     group: root
-    mode: 0644
+    mode: "u=rw,g=r,o=r"
 
 - name: Create data folder
   ansible.builtin.file:
