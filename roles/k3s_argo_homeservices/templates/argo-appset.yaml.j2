@@ -23,7 +23,7 @@ spec:
       project: default
       source:
         repoURL: https://github.com/keyrage/home-services.git
-        targetRevision: HEAD
+        targetRevision: {{ git_tag }}
         path: '{% raw %}{{.path.path}}{% endraw %}'
       destination:
         server: 'https://kubernetes.default.svc'
